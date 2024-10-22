@@ -1,25 +1,98 @@
-words_list = ["vocabulary", "reflection", "impression", "establishment", "lifestyle", 
-             "anticipation", "retirement", "initiative", "coincidence", "contradiction", 
-             "extraterrestrial", "performance", "chocolate", "partnership", "consideration", 
-             "entitlement", "imaginary", "irritating", "secretive", "competitive", 
-             "increadible", "invincible", "invisible", "imaginary", "formulate", "pronounce", 
-             "strengthen", "encounter", "reproduce", "concentrate", "challenge", "respectable", 
-             "wilderness", "articulate", "operation", "notorious", "headquarters", 
-             "premature", "announcement", "reasonable", "overwhelmed", "treasurer", 
-             "translate", "countryside", "reproduction"]
 
+stages = ['''
+    +-----+
+    |     |
+    O     |
+   /|\    |
+   / \    |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+    O     |
+   /|\    |
+   /      |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+    O     |
+   /|\    |
+          |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+    O     |
+   /|     |
+          |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+    O     |
+    |     |
+          |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+    O     |
+          |
+          |
+          |
+  ==========
+''', '''
+    +-----+
+    |     |
+          |
+          |
+          |
+          |
+  ==========
+''', ]
+
+import words
 import random
 
-random_word = random.choice(words_list)
-print(random_word)
-display_word = ""
-word_length = len(random_word)
+random_word = random.choice(words.words_list)
+random_word = list(random_word)
 
-user_guess = input("Guess a letter: \n").lower()
-for letter in random_word:
-    if letter == user_guess:
-        display_word += letter
-    else:
-        display_word += "_"
+display_word = []
+for n in random_word:
+    display_word += "_"
 
-print(display_word) 
+print(''.join(display_word))
+heart = "❤️"
+life_counter = 6
+
+while life_counter > 0 and "_" in display_word:
+    guessed_letter = input("Guess a letter: \n").lower()
+
+    for x in range(len(random_word)):
+        if guessed_letter == random_word[x]:
+            display_word[x] = guessed_letter
+            if "_" not in display_word:
+                print("You guessed the word right, YOU WIN! 🏆")
+
+    for letter in guessed_letter:
+        if guessed_letter not in random_word:
+            life_counter -= 1
+            print("Lives: " + life_counter * heart)
+            if life_counter == 1:
+                print("This is your last life! ❤️")
+        
+    print(''.join(display_word))
+    print(stages[life_counter])
+print("\n")
+
+if life_counter == 0:
+    print("Game Over!")
+    print("The word was: ")
+    print(''.join(random_word))
+    print("\n")
